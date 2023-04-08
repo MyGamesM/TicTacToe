@@ -3,6 +3,7 @@ import os, pygame
 os.system("cls")
 
 pygame.init()
+pygame.display.set_caption("TicTacToe")
 
 screen = pygame.display.set_mode((600, 600))
 clock = pygame.time.Clock()
@@ -41,34 +42,33 @@ def draw_o(x: int, y: int) -> None:
 	pygame.draw.circle(screen, GRAY, (x, y), 75, 2)
 
 def draw_end_screen() -> None:
-	pygame.draw.circle(screen, GRAY, (300, 300), 50, 2)
+	x, y = 600, 600
+	font = pygame.font.Font("font.ttf", 64)
+	text = font.render(f"{'o' if winner else 'x'} won", True, GRAY)
+	text_rect = text.get_rect()
+	text_rect.center = (x // 2, y // 2)
+	screen.blit(text, text_rect)
 
 while running:
 	screen.fill("black")
 
 	if finished:
 		draw_end_screen()
-		print("x") if not winner else print("o")
-		running = False
 	else:
 		for i in range(3):
 			if board[i][0] != 0 and board[i][1] != 0 and board[i][2] != 0 and board[i][0] == board[i][1] == board[i][2]:
-				print("a")
 				finished = True
 				winner = board[i][0] % 2 == 0
 
 			if board[0][i] != 0 and board[1][i] != 0 and board[2][i] != 0 and board[0][i] == board[1][i] == board[2][i]:
-				print("b")
 				finished = True
 				winner = board[0][i] % 2 == 0
 
 		if board[0][0] != 0 and board[1][1] != 0 and board[2][2] != 0 and board[0][0] == board[1][1] == board[2][2]:
-			print("c")
 			finished = True
 			winner = board[0][0] % 2 == 0
 
 		if board[0][2] != 0 and board[1][1] != 0 and board[2][0] != 0 and board[0][2] == board[1][1] == board[2][0]:
-			print("d")
 			finished = True
 			winner = board[0][0] % 2 == 0
 
